@@ -16,6 +16,7 @@ class User(object):
         self.email = args.get('email')
         self.password = args.get('password')
         self.group = args.get('group')
+        self.active = args.get('active')
 
     def save(self):
         """Save User"""
@@ -30,7 +31,8 @@ class User(object):
             'email': self.email,
             'password': self.password,
             'cpf': self.cpf,
-            'group': self.group
+            'group': self.group,
+            'active': self.active
         }
 
     @classmethod

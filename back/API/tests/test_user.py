@@ -49,6 +49,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(response_json['email'], user_params['email'])
         self.assertEqual(response_json['cpf'], user_params['cpf'])
         self.assertEqual(response_json['group'], user_params['group'])
+        self.assertEqual(response_json['active'], True)
         self.assertEqual(
            decrypt(response_json ['password']), user_params['password'])
 
@@ -81,7 +82,8 @@ class TestUser(unittest.TestCase):
             'name': 'Breno Bastos',
             'email': 'breno17contato@hotmail.com',
             'password': '12345',
-            'group': 'admin'
+            'group': 'admin',
+            'active': True
         }
 
         response = self.app.post('/user-sign-in', json=user_params)
@@ -95,19 +97,42 @@ class TestUser(unittest.TestCase):
 
     def test_update_and_get_user(self):
         """ Test update user """
-        user_params = {
+        user_param_create = {
             'cpf': '318.500.111-33',
             'name': 'Breno Bastos',
             'email': 'breno17contato@hotmail.com',
             'password': '12345',
             'group': 'admin'
         }
-        user = UserModule.create(user_params)
-        user_params['nome'] = 'Breno Bastos'
-        user_params['cpf'] = '300.000.111-55'
-        user_params['password'] = 'batata15'
+        user = UserModule.create(user_param_create)
+        user_param_update = {
+            'cpf': '318.500.000-44',
+            'name': 'Breno Teste',
+            'email': 'breno18contato@hotmail.com',
+            'password': 'batata15',
+            'group': 'estoquista',
+            'active': False
+        }
 
-        response = self.app.post('/user/{}'.format(user.id), json=user_params)
+        response = self.app.post('/user/{}'.format(user.id), json=user_param_update)
+
+        response_json = response.get_json()
+        self.assertEqual(response_json['name'], user_param_update['name'])
+        self.assertEqual(response_json['cpf'], user_param_update['cpf'])
+        self.assertEqual(
+           decrypt(response_json ['password']), user_param_update['password'])
+        self.assertEqual(response_json['group'], user_param_update['group'])
+        self.assertEqual(response_json['email'], user_param_create['email'])
+        self.assertEqual(response_json['active'], user_param_update['active'])
         
 
         response = self.app.get('/user/{}'.format(user.id))
+
+        response_json = response.get_json()
+        self.assertEqual(response_json['name'], user_param_update['name'])
+        self.assertEqual(response_json['cpf'], user_param_update['cpf'])
+        self.assertEqual(
+           decrypt(response_json ['password']), user_param_update['password'])
+        self.assertEqual(response_json['group'], user_param_update['group'])
+        self.assertEqual(response_json['email'], user_param_create['email'])
+        self.assertEqual(response_json['active'], user_param_update['active'])

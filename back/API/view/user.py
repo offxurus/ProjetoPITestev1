@@ -75,7 +75,8 @@ class UserHandler(Resource):
                 return {"message": "Bad request not params for update user"}, 400
             if not user:
                 return {"message": "user not found"}, 400
-            user = UserModule.update(request_params)        
+            user = UserModule.update(request_params, user)
+            return user.to_dict()    
 
         except Exception as error:
             return {

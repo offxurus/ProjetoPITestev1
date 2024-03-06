@@ -18,6 +18,7 @@ class UserModule(object):
         user.email = params['email']
         user.cpf = params['cpf']
         user.group = params['group']
+        user.active = True
 
         password_json = {'password': params['password']}
         enc_password = encripty(password_json)
@@ -27,17 +28,15 @@ class UserModule(object):
         return user
     
     @staticmethod
-    def update(params):
+    def update(params, user):
         """
         Update user
         :param params: user dict
         return user: User
         """
-        user = User()
+
         if params.get('name'):
             user.name = params['name']
-        if params.get('email'):
-            user.email = params['email']
         if params.get('cpf'):
             user.cpf = params['cpf']
         if params.get('group'):
@@ -46,6 +45,8 @@ class UserModule(object):
             password_json = {'password': params['password']}
             enc_password = encripty(password_json)
             user.password = enc_password
+        if params.get('active') != None:
+            user.active = params['active']
 
         user.save()
         return user
