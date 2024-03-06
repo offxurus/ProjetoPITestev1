@@ -1,0 +1,100 @@
+.container-content {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  overflow-y: hidden;
+
+  .login-title {
+    color: #E5E8E8;
+    font-size: 30px;
+  }
+
+  .sign-in-description {
+    margin: 40px 0px 60px 0px;
+    font-size: 20px;
+    color: #E5E8E8;
+
+    .sign-in {
+      cursor: pointer;
+      color: #26648E;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  mat-form-field {
+    background-color: #17202A;
+    border: solid;
+    border-color: #E5E8E8;
+    min-width: 380px;
+
+    mat-label {
+      color: #E5E8E8;
+    }
+
+    input {
+      color: #E5E8E8;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px #17202A inset !important;
+      -webkit-text-fill-color: #E5E8E8 !important;
+    }
+
+    .mat-form-field-label-wrapper {
+      background-color: #17202A;
+      color: #E5E8E8;
+    }
+
+    button {
+      border: none;
+      background-color: #17202A;
+
+      mat-icon {
+        color: #E5E8E8;
+        font-size: 24px;
+      }
+    }
+  }
+
+  .email-form {
+    margin: 35px 0px 10px 0px;
+  }
+
+  .password-form {
+    margin: 35px 0px 25px 0px;
+  }
+
+  section {
+    display: table;
+  }
+
+  .login-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+
+    button {
+      height: 60px;
+      font-size: 20px;
+      cursor: pointer;
+      min-width: 200px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .spinner {
+    display: flex;
+    justify-content: center;
+  }
+}

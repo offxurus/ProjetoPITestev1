@@ -1,0 +1,15 @@
+<div class="container-content">
+  <div class="spinner">
+    <mat-spinner [diameter]=50 *ngIf="showLoading"></mat-spinner>
+  </div>
+  <mat-selection-list #shoes [multiple]="false">
+    <mat-list-option *ngFor="let product of products" [value]="products">
+      {{product.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div class="login-button">
+    <button (click)="goBack()"> Go back </button>
+  </div>
+
+</div>

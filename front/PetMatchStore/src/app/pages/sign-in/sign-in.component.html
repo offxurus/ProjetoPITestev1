@@ -1,0 +1,50 @@
+<div class="col-12 container-content">
+  <div class="login-title">
+    <span> Create new Account </span>
+  </div>
+  <div class="sign-in-description">
+    <span>
+     Already Registered? <a class="sign-in" routerLink="/">Log in here.</a>
+    </span>
+  </div>
+  <form class="example-form">
+
+    <mat-form-field class="name-form" appearance="fill">
+      <mat-label>Name</mat-label>
+      <input [value]="userParams.name" (change)="changeName($event)" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="email-form" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input [value]="userParams.email" (change)="changeEmail($event)" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="cpf-form" appearance="fill">
+      <mat-label>CPF</mat-label>
+      <input [value]="userParams.cpf" (change)="changeCPF($event)" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="group-form" appearance="fill">
+      <mat-label>Grupo</mat-label>
+      <mat-select (selectionChange)="changeGroup($event.value)">
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="estoquista">Estoquista</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="password-form" appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input [value]="userParams.password" (change)="changePassword($event)" matInput [type]="hide ? 'password' : 'text'">
+      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+  </form>
+  <div class="login-button">
+    <button (click)="SignIn()"> Sign up </button>
+    <div class="spinner">
+      <mat-spinner [diameter]=50 *ngIf="showLoading"></mat-spinner>
+    </div>
+  </div>
+</div>

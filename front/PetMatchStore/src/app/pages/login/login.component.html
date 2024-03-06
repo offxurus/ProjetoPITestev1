@@ -1,0 +1,30 @@
+<div class="col-12 container-content">
+  <div class="login-title">
+    <span> Login </span>
+  </div>
+  <div class="sign-in-description">
+    <span>
+      Sign in to continue, <a class="sign-in" routerLink="/sign-in">click here to register.</a>
+    </span>
+  </div>
+  <form class="example-form">
+    <mat-form-field class="email-form" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input [value]="userParams.email" (change)="changeEmail($event)" type="email" matInput placeholder="Ex. pat@example.com">
+    </mat-form-field>
+
+    <mat-form-field class="password-form" appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input [value]="userParams.password" (change)="changePassword($event)" matInput [type]="hide ? 'password' : 'text'">
+      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+  <div class="login-button">
+    <button (click)="loginIn()"> Login in </button>
+  </div>
+  <div class="spinner">
+    <mat-spinner [diameter]=50 *ngIf="showLoading"></mat-spinner>
+  </div>
+</div>
