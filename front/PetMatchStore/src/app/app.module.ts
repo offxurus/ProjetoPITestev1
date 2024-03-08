@@ -11,11 +11,10 @@ import { UserService }                  from './services/user.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatListModule }                from '@angular/material/list';
 import { MatProgressSpinnerModule }     from '@angular/material/progress-spinner';
-import { ListUserComponent } from './pages/list-user/list-user.component';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [AppComponent, ListUserComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,4 +1,4 @@
-import { HttpClient }                             from '@angular/common/http';
+import { HttpClient, HttpHeaders }                             from '@angular/common/http';
 import { Injectable }                             from '@angular/core';
 import { Observable }                             from 'rxjs';
 import { environment }                            from 'src/environments/environment';
@@ -8,6 +8,10 @@ import { ListUser, User, UserSignIn}  from '../interfaces/user';
   providedIn: 'root',
 })
 export class UserService {
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<ListUser>{
@@ -58,13 +62,13 @@ export class UserService {
   }
   updateUser(userParams: User): Observable<User> {
     return new Observable<User>((observer) => {
-      this.http.post<User>(`${environment.apiUrl}/users`, userParams).subscribe(
+      this.http.post<User>(`${environment.apiUrl}/user/${userParams.id}`, userParams, this.httpOptions).subscribe(
         (user) => {
           observer.next(user);
           observer.complete();
         },
-        () => {
-          observer.error('error_on_create_user');
+        (error) => {
+          observer.error(error);
           observer.complete();
         }
       );

@@ -1,7 +1,7 @@
-import { Component, OnInit }  from '@angular/core';
-import { Router }             from '@angular/router';
-import { User }               from 'src/app/interfaces/user';
-import { UserService }        from 'src/app/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,15 +10,25 @@ import { UserService }        from 'src/app/services/user.service';
 })
 export class SignInComponent implements OnInit {
   public hide: boolean = true;
-  public userParams: User = { email: '', password: '', name: '', cpf: '', group: ''};
+  public userParams: User = { email: '', password: '', name: '', cpf: '', group: '', active: true};
   public showLoading: boolean = false;
+  public isUpdating: boolean = false;
+  public confirmation:boolean = false;
 
   constructor(
     private _userService: UserService,
     private _router: Router,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    if(history.state){
+      let currentUser = history.state;
+      if (currentUser && currentUser.id) {
+        this.userParams = currentUser;
+        this.isUpdating = true;
+      }
+    }
+  }
 
   changeName(event: any) {
     this.userParams.name = event.target.value;
@@ -35,19 +45,48 @@ export class SignInComponent implements OnInit {
   changeCPF(event: any) {
     this.userParams.cpf = event.target.value;
   }
+
   changeGroup(selectedGroup: string): void {
     this.userParams.group = selectedGroup;
   }
 
-  SignIn() {
-    this.showLoading = true;
-    if (this.userParams && this.userParams.email && this.userParams.password) {
-      this._userService.createUser(this.userParams).subscribe((response) => {
-        if (response.id)
-          this._router.navigate(['/list-user'], {state: {id: response.id}});
-        else
-          alert('Usuário não encontrado');
-      }, () => this.showLoading = false);
+  changeConfirm(event: any) {
+    const confirmPassword = event.target.value;
+    this.confirmation = (this.userParams.password === confirmPassword);
+  }
+
+  onSubmit() {
+    if(this.confirmation) {
+      this.showLoading = true;
+      if (this.isUpdating) {
+        this._userService.updateUser(this.userParams).subscribe(
+          (response) => {
+            console.log(response)
+            this.showLoading = false;
+            this._router.navigate(['/list-user']);
+          },
+          (error) => {
+            this.showLoading = false;
+            console.error('Erro ao atualizar usuário:', error);
+          }
+        );
+      } else {
+        this._userService.createUser(this.userParams).subscribe(
+          (response) => {
+            this.showLoading = false;
+            if (response.id)
+              this._router.navigate(['/list-user'], { state: { id: response.id } });
+            else
+              alert('Usuário não encontrado');
+          },
+          (error) => {
+            this.showLoading = false;
+            console.error('Erro ao criar usuário:', error);
+          }
+        );
+      }
+    } else {
+      alert('Erro ao logar: Senhas são diferentes')
     }
   }
 }

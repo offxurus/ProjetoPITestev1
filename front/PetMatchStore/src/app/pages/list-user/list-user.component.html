@@ -5,7 +5,7 @@
         <h4>Usuários</h4>
       </div>
       <div class="float-end">
-        <button type="button" class="btn btn-primary" [routerLink]="['novo']">Novo Usuário</button>
+        <button type="button" class="btn btn-primary">Novo Usuário</button>
       </div>
     </div>
     <div class="card-body">
@@ -27,7 +27,7 @@
             <td>{{ user.group }}</td>
             <td>
               <span class="float-end">
-                <button class="btn btn-outline-warning mb-1 btn-sm">
+                <button class="btn btn-outline-warning mb-1 btn-sm" (click)="updateUser(user)">
                   Atualizar
                 </button>
   

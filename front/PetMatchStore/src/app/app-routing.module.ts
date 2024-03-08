@@ -11,8 +11,10 @@ const routes: Routes = [
       import('./pages/login/login.module').then((mod) => mod.LoginModule),
   },
   {
-    path: 'list-users',
-    component: ListUserComponent
+    path: 'list-user',
+    loadChildren: () =>
+      import('./pages/list-user/list-user.module').then((mod) => mod.ListUserModule),
+    component: ListUserComponent,
   },
   {
     path: 'sign-in',

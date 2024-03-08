@@ -1,5 +1,6 @@
 """Arquivo main da API"""
 import firebase_admin
+from firebase_admin import firestore, credentials
 
 from flask import Flask
 from flask_restful import Resource, Api
@@ -12,8 +13,9 @@ from view.products import ProductsHandler
 app = Flask(__name__)
 CORS(app)
 API = Api(app)
+FIRESTORE_DB = firestore.client()
 
-cred = firebase_admin.credentials.Certificate(
+cred = credentials.Certificate(
     './petmatchstore-firebase-adminsdk-em0x5-7643a471fa.json')
 firebase_admin.initialize_app(credential=cred)
 
@@ -24,6 +26,12 @@ def start_request():
         return '', 200
     if not request.endpoint:
         return 'Sorry, Nothign at this URL.', 404
+    
+
+@staticmethod
+def get_firestore_db():
+    """Get firestore db instance"""
+    return FIRESTORE_DB
 
 
 class Index(Resource):

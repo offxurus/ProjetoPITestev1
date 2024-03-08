@@ -29,8 +29,8 @@ export class ListUserComponent implements OnInit {
         this.users = listUser.users;
       });
   }
-  updateUser() {
+  updateUser(user: User) {
     this.showLoading = true;
-    this._router.navigate(['/update-user'], {state: this.userParams});
+    this._router.navigate(['/sign-in'], {state: user});
   }
 }

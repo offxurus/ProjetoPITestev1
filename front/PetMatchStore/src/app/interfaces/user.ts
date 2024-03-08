@@ -9,6 +9,7 @@ export interface User {
   password?: string;
   cpf?: string;
   group?: string;
+  active?: boolean;
 }
 export interface ListUser {
   users: Array<User>;

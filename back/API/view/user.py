@@ -66,19 +66,26 @@ class UserHandler(Resource):
               'details': str(error)
             }, 500
 
-    def post(self,user_id):
+    def post(self, user_id):
         """Update a user"""
         try:
+            print("\n\n\n\n\n\nTRY")
             user = User.get_user(user_id)
+            print("\n\n\n\n\n\nlinha 73")
             request_params = request.json
+            print("\n\n\n\n\n\nrequest")
             if not request.json:
+                print("caiu no if 1")
                 return {"message": "Bad request not params for update user"}, 400
             if not user:
+                print("\n\n\n\n\n\noh ma ga")
                 return {"message": "user not found"}, 400
-            user = UserModule.update(request_params, user)
+            print("\n\n\n\n\n\nlinha 82")
+            UserModule.update(request_params, user)
             return user.to_dict()    
 
         except Exception as error:
+            print (error)
             return {
               'message': 'Error on Update a user',
               'details': str(error)
