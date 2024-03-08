@@ -12,6 +12,7 @@ export class ListUserComponent implements OnInit {
   public users: Array<User> = [];
   public hide: boolean = true;
   public userParams: User = { email: '', password: '', name: '', cpf: '', group: '', active: true};
+  public currentUserId: string = '';
   public showLoading: boolean = false;
 
   constructor(
@@ -21,6 +22,9 @@ export class ListUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
+    if(history.state){
+      this.currentUserId = history.state.id;
+    }
   }
 
   getUsers(): void {
@@ -31,7 +35,7 @@ export class ListUserComponent implements OnInit {
   }
   updateUser(user: User) {
     this.showLoading = true;
-    this._router.navigate(['/sign-in'], {state: user});
+    this._router.navigate(['/sign-in'], {state: {user: user, id:this.currentUserId}});
   }
   search(name: string){
     if(!name || name == ''){

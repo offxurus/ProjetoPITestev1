@@ -24,12 +24,12 @@
       <input [(ngModel)]="userParams.cpf" name="cpf" matInput>
     </mat-form-field>
 
-    <mat-form-field class="group-form" appearance="fill">
+    <mat-form-field class="group-form" appearance="fill" *ngIf="currentUser.id != this.currentUserId">
       <mat-label>Grupo</mat-label>
       <mat-select [(ngModel)]="userParams.group" name="group">
         <mat-option value="admin">Admin</mat-option>
         <mat-option value="estoquista">Estoquista</mat-option>
-        <mat-option value="estoquista">Cliente</mat-option>
+        <mat-option value="cliente">Cliente</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -41,12 +41,12 @@
       </button>
     </mat-form-field>
 
-    <mat-form-field class="confirm-password-form" appearance="fill">
-    <mat-label>Confirm Password</mat-label>
-    <input name="confirmPassword" matInput [type]="hide ? 'password' : 'text'" (input)="changeConfirm($event)">
-    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
+     <mat-form-field class="password-form" appearance="fill">
+      <mat-label>Confirm your password</mat-label>
+      <input [(ngModel)]="userParams.confirmPassword" name="password" matInput [type]="hide ? 'password' : 'text'" (input)="changeConfirm($event)">
+      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
     </mat-form-field>
 
     <div class="login-button">

@@ -13,7 +13,10 @@ export class SignInComponent implements OnInit {
   public userParams: User = { email: '', password: '', name: '', cpf: '', group: '', active: true};
   public showLoading: boolean = false;
   public isUpdating: boolean = false;
-  public confirmation:boolean = false;
+  public confirmation:boolean = true;
+  public oldPassword: string = '';
+  public currentUserId: string = '';
+  public currentUser: User= { email: '', password: '', name: '', cpf: '', group: '', active: true};
 
   constructor(
     private _userService: UserService,
@@ -21,12 +24,18 @@ export class SignInComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if(history.state){
-      let currentUser = history.state;
-      if (currentUser && currentUser.id) {
-        this.userParams = currentUser;
+    
+    if(history.state && history.state.user){
+      this.currentUser = history.state.user;
+      if (this.currentUser && this.currentUser.id) {
+        this.oldPassword = this.currentUser.password ? this.currentUser.password : '';
+        this.userParams = this.currentUser;
+        this.userParams.confirmPassword = this.userParams.password
         this.isUpdating = true;
       }
+    }
+    if(history.state.id && history.state){
+      this.currentUserId = history.state.id;
     }
   }
 
@@ -51,15 +60,21 @@ export class SignInComponent implements OnInit {
   }
 
   changeConfirm(event: any) {
+    if(event.target.value){
     const confirmPassword = event.target.value;
     this.confirmation = (this.userParams.password === confirmPassword);
+    }
+    else{
+      this.confirmation = false;
+    }
   }
 
   onSubmit() {
-    this.confirmation = true;
     if(this.confirmation) {
       this.showLoading = true;
       if (this.isUpdating) {
+        if(this.userParams.password == this.oldPassword)
+          this.userParams.password = '';
         this._userService.updateUser(this.userParams).subscribe(
           () => {
             this.showLoading = false;

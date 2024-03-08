@@ -1,5 +1,7 @@
 export interface UserSignIn {
   id?: string;
+  group?: string;
+  active?: boolean;
 }
 
 export interface User {
@@ -7,6 +9,7 @@ export interface User {
   name?: string;
   email?: string;
   password?: string;
+  confirmPassword?: string;
   cpf?: string;
   group?: string;
   active?: boolean;

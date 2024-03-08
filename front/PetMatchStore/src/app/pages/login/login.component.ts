@@ -29,13 +29,23 @@ export class LoginComponent implements OnInit {
     this.showLoading = true;
     if (this.userParams && this.userParams.email && this.userParams.password) {
       this._userService.userSingIn(this.userParams).subscribe((response) => {
-        if (!response.id)
+        console.log(response)
+        if (!response.id) {
           alert('Usuário não encontrado, verifique o e-mail e a senha.');
-        if (response.id)
-          this._router.navigate(['/dashboard'], {
-            state: { id: response.id },
-          });
-      }, () => this.showLoading = false
-    )};
+          this.showLoading = false;
+        } else {
+          if(!response.active){
+            alert('Usuário Inativo');
+          }
+          else if (response.group !== 'cliente') {
+            this._router.navigate(['/list-user'], { state: { id: response.id } });
+          } 
+          else {
+            alert('Você não tem permissão para acessar o backoffice.');
+            this.showLoading = false;
+          }
+        }
+      }, () => this.showLoading = false);
+    }
   }
 }
