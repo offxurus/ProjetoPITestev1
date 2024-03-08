@@ -74,4 +74,18 @@ export class UserService {
       );
     });
   }
+  getUsersbyName(name: string): Observable<any>{
+    return new Observable<any>((observer)=> {
+      this.http.get<any>(`${environment.apiUrl}/search?name=${name}`).subscribe(
+        (users) => {
+          observer.next(users);
+          observer.complete();
+        },
+        () => {
+          observer.error('error_list_users');
+          observer.complete();
+        }
+      )
+    })
+  }
 }

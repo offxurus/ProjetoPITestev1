@@ -12,6 +12,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatListModule }                from '@angular/material/list';
 import { MatProgressSpinnerModule }     from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
     HttpClientModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSlideToggleModule
   ],
   providers: [UserService, HttpClient],
   bootstrap: [AppComponent],

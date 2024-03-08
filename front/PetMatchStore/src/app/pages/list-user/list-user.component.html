@@ -5,7 +5,8 @@
         <h4>Usuários</h4>
       </div>
       <div class="float-end">
-        <button type="button" class="btn btn-primary">Novo Usuário</button>
+        <button type="button" class="btn btn-primary" (click)="createUser()">Novo Usuário</button>
+        <input #searchBox id="search-box" (input)="search(searchBox.value)" />
       </div>
     </div>
     <div class="card-body">
@@ -31,9 +32,9 @@
                   Atualizar
                 </button>
   
-                <button class="btn btn-outline-danger mb-1 btn-sm">
-                  Remover
-                </button>
+                <mat-slide-toggle class="btn btn-outline-danger mb-1 btn-sm" (click)="activeUser(user.active, user)">
+                  {{ user.active ? 'Desativar' : 'Ativar' }}
+                </mat-slide-toggle >
               </span>
             </td>
           </tr>
@@ -45,11 +46,3 @@
       </ng-template>
     </div>
   </div>
-  
-  <ng-template #deleteModal>
-    <div class="modal-body text-center">
-      <p>Tem certeza que deseja remover esse usuário?</p>
-      <button type="button" class="btn btn-default">Sim</button>
-      <button type="button" class="btn btn-primary">Nao</button>
-    </div>
-  </ng-template>

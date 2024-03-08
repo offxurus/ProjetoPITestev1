@@ -56,12 +56,12 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
+    this.confirmation = true;
     if(this.confirmation) {
       this.showLoading = true;
       if (this.isUpdating) {
         this._userService.updateUser(this.userParams).subscribe(
-          (response) => {
-            console.log(response)
+          () => {
             this.showLoading = false;
             this._router.navigate(['/list-user']);
           },
