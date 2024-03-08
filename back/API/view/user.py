@@ -16,7 +16,10 @@ class UsersHandler(Resource):
             response = {"users": []}
             users = User.get_users()
             for user in users:
-                response['users'].append(user.to_dict())
+                users_json = user.to_dict()
+                response['users'].append(users_json)
+            for test in response['users']:
+                test['password'] = decrypt(test['password'])
 
             return response
 
@@ -69,18 +72,14 @@ class UserHandler(Resource):
     def post(self, user_id):
         """Update a user"""
         try:
-            print("\n\n\n\n\n\nTRY")
             user = User.get_user(user_id)
-            print("\n\n\n\n\n\nlinha 73")
             request_params = request.json
-            print("\n\n\n\n\n\nrequest")
             if not request.json:
                 print("caiu no if 1")
                 return {"message": "Bad request not params for update user"}, 400
             if not user:
                 print("\n\n\n\n\n\noh ma ga")
                 return {"message": "user not found"}, 400
-            print("\n\n\n\n\n\nlinha 82")
             UserModule.update(request_params, user)
             return user.to_dict()    
 
@@ -96,7 +95,7 @@ class UserSignInHandler(Resource):
     """User Sign In handler"""
 
     def post(self):
-        """Get Users"""
+        """Sign in User"""
         try:
             if not request.json:
                 return {"message": "Bad request not params for user sign in"}, 400
@@ -109,6 +108,8 @@ class UserSignInHandler(Resource):
                     user = user.to_dict()
                     if decrypt(user['password']) == request_params['password']:
                         response['id'] = user['id']
+                        response['group'] = user['group']
+                        response['active'] = user['active']
                 
             return response
         

@@ -8,12 +8,12 @@ from flask import request
 from flask_cors import CORS
 from view.user import UserHandler, UserSignInHandler, UsersHandler
 from view.products import ProductsHandler
+from view.user_search import UsersSearchHandler
 
 
 app = Flask(__name__)
 CORS(app)
 API = Api(app)
-FIRESTORE_DB = firestore.client()
 
 cred = credentials.Certificate(
     './petmatchstore-firebase-adminsdk-em0x5-7643a471fa.json')
@@ -26,12 +26,6 @@ def start_request():
         return '', 200
     if not request.endpoint:
         return 'Sorry, Nothign at this URL.', 404
-    
-
-@staticmethod
-def get_firestore_db():
-    """Get firestore db instance"""
-    return FIRESTORE_DB
 
 
 class Index(Resource):
@@ -47,6 +41,7 @@ API.add_resource(UsersHandler, '/users', endpoint='users')
 API.add_resource(UserHandler, '/user/<user_id>', endpoint='user')
 API.add_resource(UserSignInHandler, '/user-sign-in', endpoint='user-sign-in')
 API.add_resource(ProductsHandler, '/products', endpoint='products')
+API.add_resource(UsersSearchHandler, '/search', endpoint='search')
 
 
 if __name__ == '__main__':

@@ -56,3 +56,11 @@ class User(object):
         """Get users"""
         return MainModule.get_firestore_db().collection(
             cls._collection_name).limit(16).stream()
+    
+    @classmethod
+    def search(cls, name):
+        """Search Name"""
+        users = MainModule.get_firestore_db().collection(
+            cls._collection_name).where('name', '==', name).limit(10).stream()
+        return users
+

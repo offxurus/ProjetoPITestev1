@@ -75,6 +75,23 @@ class TestUser(unittest.TestCase):
         response = self.app.get(path='/users')
         self.assertEqual(len(response.get_json()['users']), 2)
 
+    def test_get_users_by_name(self):
+        """ test get users """
+        user_params = {
+            'cpf': '318.500.111-33',
+            'name': 'Breno Bastos',
+            'email': 'breno17contato@hotmail.com',
+            'password': '12345',
+            'group': 'admin'
+        }
+        for _ in range(0, 2):
+            UserModule.create(user_params)
+
+        response = self.app.get(path='/search?name=Breno Bastos')
+        self.assertEqual(len(response.get_json()), 2)
+        response = self.app.get(path='/search?name=Breno')
+        self.assertEqual(len(response.get_json()['users']), 0)
+
     def test_user_sign_in(self):
         """ Test user sign in """
         user_params = {
